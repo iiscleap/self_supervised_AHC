@@ -1,0 +1,15 @@
+# This file was created by the command:
+# steps/nnet3/xconfig_to_configs.py --xconfig-file exp/xvector_nnet_1a//configs/network.xconfig --config-dir exp/xvector_nnet_1a//configs/
+#It contains the same content as ./xconfig but it was parsed and
+#default config values were set.
+# See also ./xconfig.expanded.2
+
+input name=input dim=23
+relu-batchnorm-layer name=tdnn1 add-log-stddev=False bias-stddev= dim=512 dropout-proportion=0.5 input=Append(-2,-1,0,1,2) l2-regularize= learning-rate-factor= max-change=0.75 ng-affine-options= self-repair-scale=1e-05 target-rms=1.0
+relu-batchnorm-layer name=tdnn2 add-log-stddev=False bias-stddev= dim=512 dropout-proportion=0.5 input=Append(-2,0,2) l2-regularize= learning-rate-factor= max-change=0.75 ng-affine-options= self-repair-scale=1e-05 target-rms=1.0
+relu-batchnorm-layer name=tdnn3 add-log-stddev=False bias-stddev= dim=512 dropout-proportion=0.5 input=Append(-3,0,3) l2-regularize= learning-rate-factor= max-change=0.75 ng-affine-options= self-repair-scale=1e-05 target-rms=1.0
+relu-batchnorm-layer name=tdnn4 add-log-stddev=False bias-stddev= dim=512 dropout-proportion=0.5 input=[-1] l2-regularize= learning-rate-factor= max-change=0.75 ng-affine-options= self-repair-scale=1e-05 target-rms=1.0
+relu-batchnorm-layer name=tdnn5 add-log-stddev=False bias-stddev= dim=1500 dropout-proportion=0.5 input=[-1] l2-regularize= learning-rate-factor= max-change=0.75 ng-affine-options= self-repair-scale=1e-05 target-rms=1.0
+stats-layer name=stats config=mean+stddev(0:1:1:400) dim=3000 input=[-1]
+relu-batchnorm-layer name=tdnn6 add-log-stddev=False bias-stddev= dim=128 dropout-proportion=0.5 input=stats l2-regularize= learning-rate-factor= max-change=0.75 ng-affine-options= self-repair-scale=1e-05 target-rms=1.0
+output-layer name=output bias-stddev=0.0 dim=5164 include-log-softmax=True input=[-1] l2-regularize=0.0 learning-rate-factor=1.0 max-change=1.5 ng-affine-options= objective-type=linear output-delay=0 param-stddev=0.0 presoftmax-scale-file=
