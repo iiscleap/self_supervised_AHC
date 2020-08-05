@@ -4,6 +4,7 @@ import argparse
 
 def read_arguments():
     parser = argparse.ArgumentParser(description="Deep_AHC")
+    parser.add_argument("--which_python", type=str, default="python", help="python path which has all required libraries")
     parser.add_argument("--gpuid", type=str, default=0, help="GPU id to run the code")
     parser.add_argument("--batchSize", type=int, default=1, help="Training batch size")
     parser.add_argument("--N_batches", type=int, default=100, help="Number of batches")
