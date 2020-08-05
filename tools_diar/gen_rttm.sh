@@ -5,6 +5,7 @@
 
 stage=1
 modelpath=../tf_events/xvec_ahc_folder
+which_python=python # python envorionment with required libraries installed
 . utils/parse_options.sh
 
 # using oracle number of speakers 
@@ -23,6 +24,7 @@ if [ $stage -eq 1 ]; then
     score_cosine_path=$modelpath/${dataset}_scores/
 
     ./my_cluster.sh --cmd "$train_cmd --mem 4G" --nj 20 \
+    --which_python $which_python \
     --reco2num_spk data/$dataset/$reco2num_spk \
    --lamda $lamda --score_path $score_cosine_path/cosine_scores/ \
     --usinginit $prev  --score_file ../lists/${dataset}/${dataset}.list \
@@ -81,7 +83,10 @@ if [ $stage -eq 2 ]; then
       best_threshold=0
       for threshold in -0.2 -0.1 0 0.1 0.2 ; do         
         
-        ./my_cluster.sh --cmd "$train_cmd" --nj 40 --threshold $threshold --lamda $lamda --score_path $score_cosine_path/cosine_scores/ \
+        ./my_cluster.sh --cmd "$train_cmd" --nj 20 \
+        --which_python $which_python \
+        --threshold $threshold \
+        --lamda $lamda --score_path $score_cosine_path/cosine_scores/ \
         --usinginit $prev --score_file ../lists/${dataset}/${dataset}.list \
           exp/${dataset}/ $score_cosine_path/cosine_labels_init${prev}_t$threshold/ 
 
@@ -108,6 +113,7 @@ if [ $stage -eq 2 ]; then
    dataset2=callhome2
    score_cosine_path=$modelpath/${dataset}_scores/
    ./my_cluster.sh --cmd "$train_cmd --mem 4G" --nj 20 \
+   -- which_python $which_python \
     --threshold $(cat $modelpath/${dataset2}_scores/tuning/init${prev}_best_threshold) \
    --lamda $lamda --score_path $score_cosine_path/cosine_scores/ \
     --usinginit $prev  --score_file ../lists/${dataset}/${dataset}.list \
@@ -118,6 +124,7 @@ if [ $stage -eq 2 ]; then
    dataset2=callhome1
     score_cosine_path=$modelpath/${dataset}_scores/
     ./my_cluster.sh --cmd "$train_cmd --mem 4G" --nj 20 \
+    -- which_python $which_python \
     --threshold $(cat $modelpath/${dataset2}_scores/tuning/init${prev}_best_threshold) \
     --lamda $lamda --score_path $score_cosine_path/cosine_scores/ \
     --usinginit $prev  --score_file ../lists/${dataset}/${dataset}.list \
