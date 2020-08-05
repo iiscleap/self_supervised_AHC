@@ -11,7 +11,8 @@ reco2utt=exp/${dataset}/spk2utt
 score_path=../scores_plda_new/${dataset}_scores/
 score_file=my_file
 usinginit=0
-dataset=ami_dev
+dataset=callhome1
+which_python=python
 if [ -f path.sh ]; then . ./path.sh; fi
 . parse_options.sh || exit 1;
 
@@ -51,7 +52,7 @@ if [ $stage -le 0 ]; then
   echo "threshold: "$threshold
   if [ ! -z $reco2num_spk ]; then
     $cmd JOB=1:$nj $dir/log/agglomerative_cluster.JOB.log \
-      /home/prachis/anaconda3/envs/amytorch/bin/python ../services/agglomerative.py --reco2num $sdata/JOB/reco2num_spk --lamda $lamda --using_init $usinginit --reco2utt $sdata/JOB/spk2utt \
+      $which_python ../services/agglomerative.py --reco2num $sdata/JOB/reco2num_spk --lamda $lamda --using_init $usinginit --reco2utt $sdata/JOB/spk2utt \
       --score_path $score_path \
       --label-out $dir/labels.JOB \
       --dataset $dataset \
@@ -59,7 +60,7 @@ if [ $stage -le 0 ]; then
 
   else
     $cmd JOB=1:$nj $dir/log/agglomerative_cluster.JOB.log \
-      /home/prachis/anaconda3/envs/amytorch/bin/python ../services/agglomerative.py --threshold $threshold --lamda $lamda --using_init $usinginit --reco2utt $sdata/JOB/spk2utt \
+      $which_python ../services/agglomerative.py --threshold $threshold --lamda $lamda --using_init $usinginit --reco2utt $sdata/JOB/spk2utt \
       --score_path $score_path \
       --label-out $dir/labels.JOB \
       --score_file $sdata/JOB/dataset.list
@@ -71,14 +72,14 @@ fi
 if [ $stage -le 1 ]; then
   echo "$0: combining labels"
   for j in $(seq $nj); do cat $dir/labels.$j; done > $dir/labels || exit 1;
-  for j in $(seq $nj); do ~/anaconda3/envs/amytorch/bin/python diarization/make_rttm.py --rttm-channel $rttm_channel $sdata/$j/segments $dir/labels.$j $dir/rttm.$j; done
+  for j in $(seq $nj); do $which_python diarization/make_rttm.py --rttm-channel $rttm_channel $sdata/$j/segments $dir/labels.$j $dir/rttm.$j; done
 
 fi
 
 if [ $stage -le 2 ]; then
   echo "$0: computing RTTM"
-  ~/anaconda3/envs/amytorch/bin/python diarization/make_rttm.py --rttm-channel $rttm_channel $srcdir/segments $dir/labels $dir/rttm || exit 1;
+  $which_python diarization/make_rttm.py --rttm-channel $rttm_channel $srcdir/segments $dir/labels $dir/rttm || exit 1;
   
 fi
 
-#rm -r $dir/tmp
+rm -r $dir/tmp
