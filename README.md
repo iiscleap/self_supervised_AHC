@@ -15,7 +15,7 @@ The following packages are required to run the baseline.
 
 - [Python](https://www.python.org/) >= 3.6
 - [Kaldi](https://github.com/kaldi-asr/kaldi)
-- Pytorch >= 0.4
+- Pytorch >= 0.4.1
 - [dscore](https://github.com/nryant/dscore)
 
 ## Getting started
@@ -37,7 +37,7 @@ If you are a Kaldi novice, please consult the following for additional documenta
  - Input x-vectors features are obtained using [Kaldi Callhome-diarization](https://kaldi-asr.org/models/m6). Pre-trained x-vector model and plda model including global mean and PCA transform needed  for training are given in [``tools_diar/callhome_xvector_models``](https://github.com/iiscleap/self_supervised_AHC/tree/master/tools_diar/callhome_xvector_models):
 -  Performance is evaluated using [dscore](https://github.com/nryant/dscore). Download all the required dependencies in the same python environment.
  ## Implementation 
- ##### X-vectors Extraction
+ #### X-vectors Extraction
  - This step is to run kaldi diarization pipeline till x-vector extraction using pre-trained model
  - Additionally it will convert x-vectors in ark format into numpy format to run in pytorch. It will also convert kaldi plda model into pickle format.
  - Replace "data_root" with path of callhome dataset in [``tools_diar/run_extract_xvectors.sh``](https://github.com/iiscleap/self_supervised_AHC/blob/master/tools_diar/run_extract_xvectors.sh)
@@ -47,7 +47,7 @@ If you are a Kaldi novice, please consult the following for additional documenta
  $ cd $local_dir/tools_diar
  $ bash run_extract_xvectors.sh
  ```
- ##### DNN Training
+ #### DNN Training
  - xvec_ahc_train.py is code for DNN training
  - run_xvec_ahc.sh calls DNN training script
  - Update training parameters in run_xvec_ahc.sh
@@ -66,7 +66,7 @@ reads
  $ bash run_xvec_ahc.sh $local_dir  --TYPE parallel --nj <number of jobs> --which_python <python_with_all_installed_libraries>
  ```
  **Note**: --TYPE parallel (when running multiple jobs simultaneoulsy)
-##### Evaluation
+#### Evaluation
 - Diarization Error Rate is used as performance metric 
 - Scripts in [dscore](https://github.com/nryant/dscore) generates filewise DER. 
 - Go to cloned repo and run following command for evaluation
@@ -77,7 +77,7 @@ $ bash gen_rttm.sh --stage <1/2> --modelpath <path of model to evaluate>
 ```
 **Note**: --stage 1 (using ground truth number of speakers), --stage 2 (using threshold based number of clusters)
 
-##### Output
+#### Output
 - Generates ``der.scp`` in modelpath which contains filewise DER and other metric like JER.
  
 
