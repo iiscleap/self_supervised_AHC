@@ -5,6 +5,12 @@ Created on Mon Dec 30 15:51:43 2019
 
 @author: prachi singh 
 @email: prachisingh@iisc.ac.in 
+
+This code is for DNN training 
+Explained in paper:
+P. Singh, S. Ganapathy, Deep Self-Supervised Hierarchical Clustering for Speaker Diarization, Interspeech, 2020
+
+Check main function: train_with_threshold , to run for different iterations
 """
 
 import os
@@ -163,7 +169,7 @@ class Deep_AHC:
 
         rttm_channel=0
         segmentsfile = opt.segments+'/'+f+'.segments'
-        python = '/home/prachis/anaconda3/envs/amytorch/bin/python'
+        python = opt.which_python
       
         cmd = '{} tools_diar/diarization/make_rttm.py --rttm-channel 0 {} {}/{}.labels {}/{}.rttm' .format(python,segmentsfile,output_file,f,output_file,f)        
         os.system(cmd)
@@ -172,15 +178,14 @@ class Deep_AHC:
     def compute_score(self,rttm_gndfile,rttm_newfile,outpath,overlap):
       fold_local='services/'
       scorecode='score.py -r '
-      python = '/home/prachis/anaconda3/envs/amytorch/bin/python'
      
       # print('--------------------------------------------------')
       if not overlap:
 
-          cmd=python +' '+ fold_local + 'dscore-master/' + scorecode + rttm_gndfile + ' --ignore_overlaps --collar 0.25 -s ' + rttm_newfile + ' > ' + outpath + '.txt'
+          cmd=opt.which_python +' '+ fold_local + 'dscore-master/' + scorecode + rttm_gndfile + ' --ignore_overlaps --collar 0.25 -s ' + rttm_newfile + ' > ' + outpath + '.txt'
           os.system(cmd)
       else:
-          cmd=python + ' '+ fold_local + 'dscore-master/' + scorecode + rttm_gndfile + ' -s ' + rttm_newfile + ' > ' + outpath + '.txt'
+          cmd=opt.which_python + ' '+ fold_local + 'dscore-master/' + scorecode + rttm_gndfile + ' -s ' + rttm_newfile + ' > ' + outpath + '.txt'
           os.system(cmd)
       # print('----------------------------------------------------')
       # subprocess.check_call(cmd,stderr=subprocess.STDOUT)
@@ -298,7 +303,15 @@ class Deep_AHC:
     def train_with_threshold(self,model_init):
         """
         train the network using triplet loss
-        change set_dist : to vary threshold to decide intial number of clusters
+        Threshold range : Decide intial number of clusters N0
+        th = [0.0,0.1,0.2,0.3,0.4]
+        ##############################
+        Set following parameters here
+        -----------------------------
+        th_count : index of "th" array , selects the starting threshold (default: 1)
+        stop_period: How many iterations to run (default: 1 i.e train for 1 iteration and then go till N*)
+     
+        ###############################
 
         saves the model,
         score matrix
@@ -315,10 +328,11 @@ class Deep_AHC:
         None.
 
         """
-        stop_period  = 1
+       
         th_count = 1
         th = [0.0,0.1,0.2,0.3,0.4]
         set_dist = th[th_count] # setting threshold = 0.1
+        stop_period  = min(1,th_count)
 
 
         model = self.model
