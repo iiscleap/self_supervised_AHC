@@ -63,7 +63,7 @@ reads
  ```sh
  $ local_dir="Full_path_of_cloned_repository"
  $ cd $local_dir
- $ bash run_xvec_ahc.sh $local_dir  --TYPE parallel --nj <number of jobs> --which_python <python_with_all_installed_libraries>
+ $ bash run_xvec_ahc.sh $local_dir  --TYPE parallel --nj <number of jobs> --which_python <python_env_with_all_installed_libraries>
  ```
  **Note**: --TYPE parallel (when running multiple jobs simultaneoulsy)
 #### Evaluation
@@ -73,7 +73,7 @@ reads
 ```sh
 $ local_dir="Full_path_of_cloned_repository"
 $ cd $local_dir/tool_diar
-$ bash gen_rttm.sh --stage <1/2> --modelpath <path of model to evaluate>
+$ bash gen_rttm.sh --stage <1/2> --modelpath <path of model to evaluate> --which_python <python_env_with_all_installed_libraries>
 ```
 **Note**: --stage 1 (using ground truth number of speakers), --stage 2 (using threshold based number of clusters)
 
