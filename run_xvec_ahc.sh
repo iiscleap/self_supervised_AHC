@@ -2,11 +2,18 @@
 # @author: prachi singh 
 # @email: prachisingh@iisc.ac.in 
 
+# This script calls DNN training python script xvec_ahc_train.py 
+# All the parameters needed for training are passed as argument in this script
+# If system supports multiple jobs then TYPE is set as parallel and nj represents number of jobs
+# which_python variable is to pass the python full path where the required libraries are installed otherwise it will throw errors
+
+
 dataset=callhome1  # interchange for training callhome2 files
 dataset2=callhome2
 outf=tf_events/xvec_ahc_trained/${dataset}_scores/ # output folder path
 TYPE=parallel # training parallely multiple utterances
 nj=40 # number of jobs for parallelizing
+which_python=python # python with all needed installation
 mkdir -p $outf/
 
 . ./cmd.sh
@@ -19,7 +26,7 @@ main_dir=$1
 if [ -z "$1" ]; then
 	echo "need main_directory full path as argument"
 	echo " Set arguments for training in the code"
-	echo "Usage : bash run_xvec_ahc.sh --TYPE <parallel/None> --nj <number of jobs> full path of main directory "
+	echo "Usage : bash run_xvec_ahc.sh --TYPE <parallel/None> --nj <number of jobs> full path of main directory --which_python <python with all requirements> "
 	exit 1
 fi
 
@@ -31,7 +38,8 @@ if [ $TYPE == "parallel" ]; then
         cd ../
     fi
 	$train_cmd JOB=1:$nj $outf/log/Deep_AHC.JOB.log \
-	python xvec_ahc_train.py \
+	$which_python xvec_ahc_train.py \
+	--which_python $which_python \
 	--gpuid '0' \
 	--batchSize 64 \
 	--N_batches 1 \
@@ -51,7 +59,8 @@ if [ $TYPE == "parallel" ]; then
 	--kaldimodel lists/$dataset2/plda_${dataset2}.pkl
 
 else
-	python xvec_ahc_train.py \
+	$which_python xvec_ahc_train.py \
+	--which_python $which_python \
 	--gpuid '0' \
 	--batchSize 64 \
 	--N_batches 1 \
