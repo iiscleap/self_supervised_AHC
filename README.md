@@ -72,7 +72,9 @@ reads
 - Go to cloned repo and run following command for evaluation
 ```sh
 $ local_dir="Full_path_of_cloned_repository"
-$ cd $local_dir/tool_diar
+$ cd $local_dir
+$ find $local_dir/rttm_ground/*.rttm > ref_callhome.scp
+$ cd tool_diar/
 $ bash gen_rttm.sh --stage <1/2> --modelpath <path of model to evaluate> --which_python <python_env_with_all_installed_libraries>
 ```
 **Note**: --stage 1 (using ground truth number of speakers), --stage 2 (using threshold based number of clusters)
