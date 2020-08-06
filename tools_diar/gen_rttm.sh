@@ -57,8 +57,8 @@ if [ $stage -eq 1 ]; then
   echo "der callhome: $der"
 
   
-  bash ../compute_rttm.sh callhome $modelpath/callhome/${labels}_init${prev}_oracle_rttm rttm
-  bash ../score.sh $modelpath/callhome/${labels}_init${prev}_oracle_rttm ../rttm_ground/*.rttm sys.scp der.scp 2>/dev/null
+  bash ../compute_rttm.sh callhome $modelpath/callhome/ ${labels}_init${prev}_oracle_rttm 
+  bash ../score.sh $modelpath/callhome/ ../ref_callhome.scp
 
   echo "filewise der at $modelpath/callhome/der.scp"
 
@@ -146,8 +146,8 @@ if [ $stage -eq 2 ]; then
     $modelpath/results/init${prev}_DER_threshold.txt)
    echo "der callhome: $der"
 
-   bash ../compute_rttm.sh callhome $modelpath/callhome/init${prev}_rttm rttm
-   bash ../score.sh $modelpath/callhome/${labels}_init${prev}_oracle_rttm ../rttm_ground/*.rttm sys.scp der.scp 2>/dev/null
+   bash ../compute_rttm.sh callhome $modelpath/callhome/ init${prev}_rttm
+   bash ../score.sh $modelpath/callhome/ ../ref_callhome.scp
 
    echo "filewise der at $modelpath/callhome/der.scp"
 
