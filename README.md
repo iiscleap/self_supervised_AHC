@@ -82,4 +82,6 @@ $ bash gen_rttm.sh --stage <1/2> --modelpath <path of model to evaluate> --which
 #### Output
 - Generates ``der.scp`` in modelpath which contains filewise DER and other metric like JER.
  
+## Contact
+If you have any comment or question, please contact prachisingh@iisc.ac.in
 
