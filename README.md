@@ -1,7 +1,7 @@
 # Deep Self-Supervised Hierarchical Clustering for Speaker Diarization
 
 This repository is code used in our paper:
->  [Deep Self-Supervised Hierarchical Clustering for Speaker Diarization](https://arxiv.org/abs/2008.03960) 
+> [Deep Self-Supervised Hierarchical Clustering for Speaker Diarization](https://arxiv.org/abs/2008.03960)
 > Prachi Singh, Sriram Ganapathy  
 > Accepted in Interspeech 2020
 ## Overview
