@@ -1,7 +1,7 @@
 # Deep Self-Supervised Hierarchical Clustering for Speaker Diarization
 
 This repository is code used in our paper:
->  Deep Self-Supervised Hierarchical Clustering for Speaker Diarization  
+>  [Deep Self-Supervised Hierarchical Clustering for Speaker Diarization](https://arxiv.org/abs/2008.03960) 
 > Prachi Singh, Sriram Ganapathy  
 > Accepted in Interspeech 2020
 ## Overview
@@ -81,7 +81,13 @@ $ bash gen_rttm.sh --stage <1/2> --modelpath <path of model to evaluate> --which
 
 #### Output
 - Generates ``der.scp`` in modelpath which contains filewise DER and other metric like JER.
- 
+## Cite
+@article{singh2020deep,
+  title={Deep Self-Supervised Hierarchical Clustering for Speaker Diarization},
+  author={Singh, Prachi and Ganapathy, Sriram},
+  journal={arXiv preprint arXiv:2008.03960},
+  year={2020}
+}
 ## Contact
 If you have any comment or question, please contact prachisingh@iisc.ac.in
 
