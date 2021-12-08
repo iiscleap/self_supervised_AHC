@@ -16,7 +16,7 @@ nj=40 # number of jobs for parallelizing
 which_python=python # python with all needed installation
 mkdir -p $outf/
 
-. ./cmd.sh
+. ./tools_diar/cmd.sh
 . ./tools_diar/path.sh
 
 . ./tools_diar/utils/parse_options.sh

@@ -79,7 +79,8 @@ if __name__=="__main__":
 
     print("In the label generation script...")
     parser = argparse.ArgumentParser(description='Speaker Label generation for embeddings')
-    parser.add_argument('--dataset', default=default_dataset, type=str, help='dataset', nargs='?')
+    # Commenting line 83 because there is no provision to send dataset variable in the function generate label
+    # parser.add_argument('--dataset', default=default_dataset, type=str, help='dataset', nargs='?')
     parser.add_argument('--segmentsfile', default=default_segments, type=str, metavar='PATH', help='path of the embedding segments file', nargs='?')
     parser.add_argument('--labelsfiledir', default=default_labels_dir, type=str, metavar='PATH', help='path of the labels file', nargs='?')
     parser.add_argument('--ground_truth_rttm', default=default_gt_rttm, type=str, metavar='PATH', help='path of the ground truth rttm file', nargs='?')

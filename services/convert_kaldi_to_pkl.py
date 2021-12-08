@@ -65,8 +65,8 @@ def load_kaldi_matrices(args):
     else:
         print('plda model does not exist!')
         plda = {}
-    transform_mat_file = '{}/transform.mat'.format(fold_local,dataset2)
-    mean_vec_file = '{}/mean.vec'.format(fold_local,dataset2)
+    transform_mat_file = '{}/transform.mat'.format(fold_local)
+    mean_vec_file = '{}/mean.vec'.format(fold_local)
     transform_mat = np.asarray([w.split() for w in np.asarray(subprocess.check_output(["copy-matrix","--binary=false", transform_mat_file, "-"]).decode('utf-8').strip()[2:-2].split('\n'))]).astype(float)
     mean_vec = np.asarray(subprocess.check_output(["copy-vector", "--binary=false",mean_vec_file, "-"]).decode('utf-8').strip()[1:-2].split()).astype(float)
     plda['transform_mat'] = transform_mat
